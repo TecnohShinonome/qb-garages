@@ -442,6 +442,13 @@ RegisterNetEvent('qb-garages:client:addHouseGarage', function(house, garageInfo)
     TriggerServerEvent('qb-garages:server:syncGarage', Config.Garages)
 end)
 
+RegisterNetEvent('qb-garages:client:removeHouseGarage', function(house)
+    local formattedHouseName = string.gsub(string.lower(house), ' ', '')
+    local zoneName = 'house_' .. formattedHouseName
+    RemoveHouseZone(zoneName)
+    Config.Garages[formattedHouseName] = nil
+end)
+
 -- Handlers
 
 AddEventHandler('QBCore:Client:OnPlayerLoaded', function()

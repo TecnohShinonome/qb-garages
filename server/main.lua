@@ -70,7 +70,7 @@ end
 -- Callbacks
 
 QBCore.Functions.CreateCallback('qb-garages:server:getHouseGarage', function(_, cb, house)
-    local houseInfo = MySQL.single.await('SELECT * FROM houselocations WHERE name = ?', { house })
+    local houseInfo = MySQL.single.await('SELECT * FROM properties WHERE property_id = ?', { house })
     cb(houseInfo)
 end)
 
@@ -149,7 +149,7 @@ QBCore.Functions.CreateCallback('qb-garages:server:canDeposit', function(source,
         cb(false)
         return
     end
-    if type == 'house' and not exports['qb-houses']:hasKey(Player.PlayerData.license, Player.PlayerData.citizenid, Config.Garages[garage].houseName) then
+    if type == 'house' and not exports['ps-housing']:IsOwner(source, garage) then
         cb(false)
         return
     end
